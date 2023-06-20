@@ -5,7 +5,8 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
-import LoadingButton from "@mui/lab/LoadingButton";
+import PrimaryButton from "@/Components/PrimaryButton";
+import PasswordInput from "@/Components/PasswordInput";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -38,14 +39,15 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
                     <TextInput
                         id="email"
                         type="email"
                         name="email"
+                        required
+                        error={errors.email}
                         value={data.email}
                         className="mt-1 block w-full"
+                        label="Email"
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData("email", e.target.value)}
@@ -55,13 +57,13 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
+                    <PasswordInput
                         id="password"
-                        type="password"
                         name="password"
+                        required
+                        error={errors.password}
                         value={data.password}
+                        label="Password"
                         className="mt-1 block w-full"
                         autoComplete="current-password"
                         onChange={(e) => setData("password", e.target.value)}
@@ -79,7 +81,7 @@ export default function Login({ status, canResetPassword }) {
                                 setData("remember", e.target.checked)
                             }
                         />
-                        <span className="ml-2 text-sm text-gray-600">
+                        <span className="text-sm text-gray-600">
                             Remember me
                         </span>
                     </label>
@@ -95,14 +97,9 @@ export default function Login({ status, canResetPassword }) {
                         </Link>
                     )}
 
-                    <LoadingButton
-                        loading={processing}
-                        variant="contained"
-                        type="submit"
-                        size="small"
-                    >
-                        <div className="font-semibold">Masuk</div>
-                    </LoadingButton>
+                    <PrimaryButton loading={processing} type="submit">
+                        Masuk
+                    </PrimaryButton>
                 </div>
             </form>
         </GuestLayout>

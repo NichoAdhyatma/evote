@@ -1,6 +1,16 @@
-import { forwardRef, useEffect, useRef } from 'react';
+import { FormControl, Input, InputLabel } from "@mui/material";
+import { forwardRef, useEffect, useRef } from "react";
 
-export default forwardRef(function TextInput({ type = 'text', className = '', isFocused = false, ...props }, ref) {
+export default forwardRef(function TextInput(
+    {
+        className = "",
+        label = "TextField",
+        isFocused = false,
+        type = "",
+        ...props
+    },
+    ref
+) {
     const input = ref ? ref : useRef();
 
     useEffect(() => {
@@ -10,14 +20,9 @@ export default forwardRef(function TextInput({ type = 'text', className = '', is
     }, []);
 
     return (
-        <input
-            {...props}
-            type={type}
-            className={
-                'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm ' +
-                className
-            }
-            ref={input}
-        />
+        <FormControl variant="standard" fullWidth margin="dense" size="small">
+            <InputLabel htmlFor={props.id}>{label}</InputLabel>
+            <Input {...props} type={type} className={className} ref={input} />
+        </FormControl>
     );
 });
