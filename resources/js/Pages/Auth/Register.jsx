@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { LoadingButton } from '@mui/lab';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -102,14 +103,19 @@ export default function Register() {
                 <div className="flex items-center justify-end mt-4">
                     <Link
                         href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="mr-5 underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Already registered?
+                        Sudah punya akun ?
                     </Link>
 
-                    <PrimaryButton className="ml-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
+                    <LoadingButton
+                        loading={processing}
+                        variant="contained"
+                        type="submit"
+                        size="small"
+                    >
+                        <div className="font-semibold">Daftar</div>
+                    </LoadingButton>
                 </div>
             </form>
         </GuestLayout>
