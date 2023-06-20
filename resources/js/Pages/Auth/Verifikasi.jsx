@@ -5,12 +5,14 @@ import { Head } from "@inertiajs/react";
 import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import React from "react";
 import Webcam from "react-webcam";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Verifikasi({ auth }) {
-    const [deviceId, setDeviceId] = React.useState(null);
+    const [deviceId, setDeviceId] = React.useState("");
     const [devices, setDevices] = React.useState([]);
     const [imageSrc, setImageSrc] = React.useState(null);
     const [isOnCam, setIsOnCam] = React.useState(false);
+    const [isReject, setIsReject] = React.useState(false);
 
     const webcamRef = React.useRef(null);
 
@@ -24,22 +26,44 @@ export default function Verifikasi({ auth }) {
         setIsOnCam(true);
     }, [webcamRef]);
 
-    const handleChange = (event) => {
-        setDeviceId(event.target.value);
-        setIsOnCam(true);
-    };
+    const handleChange = React.useCallback(
+        (event) => {
+            setDeviceId(event.target.value);
+            setIsOnCam(true);
+        },
+        [webcamRef]
+    );
 
     const handleDevices = React.useCallback(
-        (mediaDevices) =>
+        (mediaDevices) => {
+            setIsReject(false);
             setDevices(
                 mediaDevices.filter(({ kind }) => kind === "videoinput")
-            ),
+            );
+        },
         [setDevices]
     );
 
-    React.useEffect(() => {
-        navigator.mediaDevices.enumerateDevices().then(handleDevices);
-    }, [handleDevices]);
+    const getCamAccess = () => {
+        navigator.mediaDevices
+            .getUserMedia({ video: true })
+            .then(() => {
+                navigator.mediaDevices.enumerateDevices().then(handleDevices);
+            })
+            .catch(() => {
+                setIsReject(true);
+                toast.error("Anda Menolak Akses Kamera..", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            });
+    };
 
     return (
         <Guest>
@@ -52,21 +76,42 @@ export default function Verifikasi({ auth }) {
                 verifkasi foto dulu yaa
             </div>
 
-            <FormControl fullWidth margin="dense" variant="standard">
-                <InputLabel id="select-device">Pilih Device Kamera</InputLabel>
-                <Select
-                    labelId="select-device"
-                    id="demo-simple-select"
-                    label="Age"
-                    onChange={handleChange}
-                >
-                    {devices.map((device, key) => (
-                        <MenuItem key={key} value={device.deviceId}>
-                            {device.label || `Device ${key + 1}`}
+            {devices.length > 0 ? (
+                <FormControl fullWidth margin="dense" variant="standard">
+                    <InputLabel id="select-device">
+                        Pilih Device Kamera
+                    </InputLabel>
+                    <Select
+                        labelId="select-device"
+                        id="demo-simple-select"
+                        label="Age"
+                        value={deviceId}
+                        onChange={handleChange}
+                    >
+                        <MenuItem disabled value="">
+                            Pilih salah satu dibawah
                         </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                        {devices.map((device, key) => (
+                            <MenuItem key={key} value={device.deviceId}>
+                                {device.label || `Device ${key + 1}`}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            ) : (
+                <div className="my-4">
+                    <PrimaryButton onClick={getCamAccess}>
+                        Beri Akses Kamera
+                    </PrimaryButton>
+                </div>
+            )}
+
+            {isReject && (
+                <p className="text-red-500 font-semibold">
+                    Anda meblokir akses kamera , silahkan atur secara manual di
+                    web browser anda
+                </p>
+            )}
 
             {isOnCam ? (
                 <>
@@ -106,6 +151,7 @@ export default function Verifikasi({ auth }) {
             ) : (
                 <p className="my-2">Ambil Foto dulu yaa gan..</p>
             )}
+            <ToastContainer limit={5} />
         </Guest>
     );
 }
