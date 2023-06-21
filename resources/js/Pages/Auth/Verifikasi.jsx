@@ -68,7 +68,7 @@ export default function Verifikasi({ auth }) {
             .catch(() => {
                 setIsReject(true);
                 toast.error("Anda Menolak Akses Kamera..", {
-                    position: "top-right",
+                    position: "top-center",
                     autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,

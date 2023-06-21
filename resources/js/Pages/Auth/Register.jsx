@@ -66,45 +66,6 @@ export default function Register() {
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
-                    <PasswordInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        label="Password"
-                        error={errors.password}
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData("password", e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <PasswordInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        label="Password Confirmation"
-                        error={errors.password_confirmation}
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) =>
-                            setData("password_confirmation", e.target.value)
-                        }
-                        required
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
-                </div>
-
                 <div className="flex items-center justify-end mt-4">
                     <Link
                         href={route("login")}

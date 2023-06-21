@@ -3,22 +3,36 @@ import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import PasswordInput from "@/Components/PasswordInput";
+import { ToastContainer, toast } from "react-toastify";
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
-        password: "",
+        token: "",
         remember: false,
     });
 
     useEffect(() => {
+        if (errors.all) {
+            toast.error(errors.all, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+
         return () => {
             reset("password");
         };
-    }, []);
+    }, [errors]);
 
     const submit = (e) => {
         e.preventDefault();
@@ -43,8 +57,7 @@ export default function Login({ status, canResetPassword }) {
                         type="email"
                         name="email"
                         required
-                        error={errors.email}
-                        value={data.email}
+                        error={errors.all}
                         className="mt-1 block w-full"
                         label="Email"
                         autoComplete="username"
@@ -60,12 +73,11 @@ export default function Login({ status, canResetPassword }) {
                         id="password"
                         name="password"
                         required
-                        error={errors.password}
-                        value={data.password}
-                        label="Password"
+                        error={errors.all}
+                        label="Token"
                         className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData("password", e.target.value)}
+                        autoComplete="current-token"
+                        onChange={(e) => setData("token", e.target.value)}
                     />
 
                     <InputError message={errors.password} className="mt-2" />
@@ -87,20 +99,12 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route("password.request")}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
                     <PrimaryButton loading={processing} type="submit">
                         Masuk
                     </PrimaryButton>
                 </div>
             </form>
+            <ToastContainer limit={5} />
         </GuestLayout>
     );
 }
