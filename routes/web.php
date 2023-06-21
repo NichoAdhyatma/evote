@@ -19,17 +19,19 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
+    return Inertia::render(
+        'Welcome'
+    );
 });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth:sanctum', 'verified'])->name('dashboard');
+})->middleware(['auth:sanctum', 'token'])->name('dashboard');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum', 'token')->group(function () {
+    Route::get('/bem', function () {
+        return Inertia::render('Pemilihan/Layout');
+    })->name('bem');
     Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('verif.index');
     Route::get('/onboard', [VerifikasiController::class, 'onboard'])->name('verif.onboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

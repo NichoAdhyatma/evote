@@ -10,11 +10,11 @@ export default function PrimaryButton({
     return (
         <LoadingButton
             type={type}
-            {...props}
             className={className}
             disabled={disabled}
             variant="contained"
             size="small"
+            {...props}
         >
             <div className="font-semibold">{children}</div>
         </LoadingButton>

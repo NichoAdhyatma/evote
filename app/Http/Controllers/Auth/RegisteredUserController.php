@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:'.User::class,
+            'email' => 'required|string|email|max:255|unique:' . User::class,
         ]);
 
         $user = User::create([
@@ -44,6 +44,12 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        $user = Auth::user();
+
+        $user->token = $user->createToken('auth-token')->plainTextToken;
+
+        $user->save();
 
         return redirect(RouteServiceProvider::HOME);
     }
