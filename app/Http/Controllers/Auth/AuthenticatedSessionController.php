@@ -13,6 +13,7 @@ use Inertia\Response;
 
 class AuthenticatedSessionController extends Controller
 {
+
     /**
      * Display the login view.
      */
@@ -31,6 +32,14 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        $user = Auth::user();
+
+        $token = $user->createToken('auth-token');
+
+        $user->token = $token->plainTextToken;
+
+        $user->save();
+
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::VERIF);
@@ -41,13 +50,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $user = Auth::user();
 
-        $user->token = null;
-
-        $user->tokens()->delete();
-
-        $user->save();
+        Auth::user()->tokens()->delete();
 
         Auth::guard('web')->logout();
 

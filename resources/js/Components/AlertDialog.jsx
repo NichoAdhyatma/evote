@@ -27,11 +27,7 @@ export default function AlertDialog({ handleClose, title, content, open }) {
                     <SecondaryButton onClick={() => handleClose(false)}>
                         Tidak
                     </SecondaryButton>
-                    <PrimaryButton
-                        onClick={() => handleClose(true)}
-                        autoFocus
-                        variant="standard"
-                    >
+                    <PrimaryButton onClick={() => handleClose(true)} autoFocus>
                         Iya yakin
                     </PrimaryButton>
                 </DialogActions>

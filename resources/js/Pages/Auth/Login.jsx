@@ -53,7 +53,6 @@ export default function Login({ status }) {
                         type="email"
                         name="email"
                         required
-                        error={errors.all}
                         className="mt-1 block w-full"
                         label="Email"
                         autoComplete="username"
@@ -69,7 +68,6 @@ export default function Login({ status }) {
                         id="token"
                         name="token"
                         required
-                        error={errors.all}
                         label="Token"
                         className="mt-1 block w-full"
                         autoComplete="current-token"
