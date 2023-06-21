@@ -1,6 +1,8 @@
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 import { Link, Head } from "@inertiajs/react";
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+export default function Welcome({ auth }) {
     return (
         <>
             <Head title="Welcome" />
@@ -11,30 +13,32 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             href={route("dashboard")}
                             className="font-semibold"
                         >
-                            Dashboard
+                            <PrimaryButton>Dashboard</PrimaryButton>
                         </Link>
                     ) : (
-                        <>
+                        <div className="flex gap-4 items-center">
                             <Link
                                 href={route("login")}
                                 className="font-semibold"
                             >
-                                Log in
+                                <PrimaryButton>Masuk</PrimaryButton>
                             </Link>
 
                             <Link
                                 href={route("register")}
-                                className="ml-4 font-semibold"
+                                className="font-semibold"
                             >
-                                Register
+                                <SecondaryButton>Daftar</SecondaryButton>
                             </Link>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>
 
             <div className="mt-20 max-w-7xl mx-auto">
-                <h1 className="text-center text-3xl font-semibold">Website Evote</h1>
+                <h1 className="text-center text-3xl font-semibold">
+                    Website Evote
+                </h1>
             </div>
         </>
     );
