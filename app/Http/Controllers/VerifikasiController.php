@@ -11,4 +11,9 @@ class VerifikasiController extends Controller
     {
         return Inertia::render('Auth/Verifikasi');
     }
+
+    public function onboard()
+    {
+        return Inertia::render('Auth/OnBoarding');
+    }
 }

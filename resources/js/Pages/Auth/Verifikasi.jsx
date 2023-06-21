@@ -1,14 +1,16 @@
 import DangerButton from "@/Components/DangerButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Guest from "@/Layouts/GuestLayout";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import React from "react";
 import Webcam from "react-webcam";
 import { ToastContainer, toast } from "react-toastify";
+import AlertDialog from "@/Components/AlertDialog";
 
 export default function Verifikasi({ auth }) {
     const [deviceId, setDeviceId] = React.useState("");
+    const [open, setOpen] = React.useState(false);
     const [devices, setDevices] = React.useState([]);
     const [imageSrc, setImageSrc] = React.useState(null);
     const [isOnCam, setIsOnCam] = React.useState(false);
@@ -34,9 +36,22 @@ export default function Verifikasi({ auth }) {
         [webcamRef]
     );
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (res) => {
+        setOpen(false);
+
+        if (res) {
+            router.visit("onboard");
+        }
+    };
+
     const handleDevices = React.useCallback(
         (mediaDevices) => {
             setIsReject(false);
+            setIsOnCam(true);
             setDevices(
                 mediaDevices.filter(({ kind }) => kind === "videoinput")
             );
@@ -76,7 +91,7 @@ export default function Verifikasi({ auth }) {
                 verifkasi foto dulu yaa
             </div>
 
-            {devices.length > 0 ? (
+            {devices.length > 0 && isOnCam ? (
                 <FormControl fullWidth margin="dense" variant="standard">
                     <InputLabel id="select-device">
                         Pilih Device Kamera
@@ -98,7 +113,7 @@ export default function Verifikasi({ auth }) {
                         ))}
                     </Select>
                 </FormControl>
-            ) : (
+            ) : devices.length > 0 ? null : (
                 <div className="my-4">
                     <PrimaryButton onClick={getCamAccess}>
                         Beri Akses Kamera
@@ -132,14 +147,14 @@ export default function Verifikasi({ auth }) {
             )}
 
             {imageSrc ? (
-                <>
-                    <div className="font-semibold flex justify-between mb-2 items-center my-4">
+                <div className="flex flex-col gap-4 mt-4">
+                    <div className="font-semibold flex justify-between items-center">
                         <p>Hasil Foto</p>
                         <div className="flex gap-2">
-                            <PrimaryButton color="success">
-                                Kirim Foto
-                            </PrimaryButton>
-                            <DangerButton onClick={deleteCapture}>
+                            <DangerButton
+                                onClick={deleteCapture}
+                                color="warning"
+                            >
                                 Ambil ulang
                             </DangerButton>
                         </div>
@@ -147,10 +162,27 @@ export default function Verifikasi({ auth }) {
                     <figure>
                         <img src={imageSrc} alt="your face" />
                     </figure>
-                </>
+
+                    <PrimaryButton
+                        color="success"
+                        className="w-full"
+                        onClick={handleClickOpen}
+                    >
+                        Kirim Foto
+                    </PrimaryButton>
+                </div>
             ) : (
                 <p className="my-2">Ambil Foto dulu yaa gan..</p>
             )}
+
+            <AlertDialog
+                open={open}
+                handleClose={handleClose}
+                title={"Yakin ingin mengirim foto ini ?"}
+                content={
+                    "Foto ini akan di kirim ke panita sebagai bukti verifikasi"
+                }
+            />
             <ToastContainer limit={5} />
         </Guest>
     );
