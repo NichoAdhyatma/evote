@@ -27,9 +27,9 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth:sanctum', 'verified'])->name('dashboard');
+})->middleware(['auth:sanctum', 'token'])->name('dashboard');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum', 'token')->group(function () {
     Route::get('/verifikasi', [VerifikasiController::class, 'index'])->name('verif.index');
     Route::get('/onboard', [VerifikasiController::class, 'onboard'])->name('verif.onboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

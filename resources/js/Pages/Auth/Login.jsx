@@ -28,10 +28,6 @@ export default function Login({ status }) {
                 theme: "light",
             });
         }
-
-        return () => {
-            reset("password");
-        };
     }, [errors]);
 
     const submit = (e) => {
@@ -70,8 +66,8 @@ export default function Login({ status }) {
 
                 <div className="mt-4">
                     <PasswordInput
-                        id="password"
-                        name="password"
+                        id="token"
+                        name="token"
                         required
                         error={errors.all}
                         label="Token"
@@ -80,7 +76,7 @@ export default function Login({ status }) {
                         onChange={(e) => setData("token", e.target.value)}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.token} className="mt-2" />
                 </div>
 
                 <div className="block mt-4">
