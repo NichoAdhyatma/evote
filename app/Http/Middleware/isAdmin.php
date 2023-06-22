@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class tokenActive
+class isAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,21 +16,9 @@ class tokenActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        if (Auth::user()->tokens()->count() > 0 && Auth::user()->level === 'user') {
+        if (Auth::user()->level === 'admin') {
             return $next($request);
         }
-
-        else if (Auth::user()->level === 'admin') {
-            return redirect('/');
-        }
-
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
         return redirect('/');
     }
 }

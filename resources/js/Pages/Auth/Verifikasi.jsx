@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import AlertDialog from "@/Components/AlertDialog";
 
 export default function Verifikasi({ auth }) {
-    const { data, setData, processing, errors } = useForm({
+    const { data, setData} = useForm({
         image: null,
     });
 

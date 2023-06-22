@@ -10,7 +10,11 @@ export default function Welcome({ auth }) {
                 <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
                     {auth.user ? (
                         <Link
-                            href={route("dashboard")}
+                            href={
+                                auth.user.level === "user"
+                                    ? route("dashboard")
+                                    : route("admin.index")
+                            }
                             className="font-semibold"
                         >
                             <PrimaryButton>Dashboard</PrimaryButton>

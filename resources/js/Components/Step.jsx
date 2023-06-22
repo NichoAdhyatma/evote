@@ -10,6 +10,7 @@ import Blm from "@/Pages/Pemilihan/Blm";
 import Confirmation from "@/Pages/Pemilihan/Confrimation";
 import PrimaryButton from "./PrimaryButton";
 import { router } from "@inertiajs/react";
+import { Collapse } from "@mui/material";
 
 const steps = [
     "Calon Ketua - Wakil BEM",
@@ -17,7 +18,7 @@ const steps = [
     "Konfirmasi Pilihan",
 ];
 
-export default function HorizontalLinearStepper() {
+export default function HorizontalLinearStepper({ handlePilihan, pilihan }) {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
@@ -56,13 +57,23 @@ export default function HorizontalLinearStepper() {
             ) : (
                 <React.Fragment>
                     <div className="my-4">
-                        {activeStep == 0 ? (
-                            <Bem />
-                        ) : activeStep == 1 ? (
-                            <Blm />
-                        ) : (
-                            <Confirmation />
-                        )}
+                        <Collapse in={activeStep === 0}>
+                            <Bem
+                                handlePilihan={handlePilihan}
+                                bem={pilihan.bem}
+                            />
+                        </Collapse>
+
+                        <Collapse in={activeStep === 1}>
+                            <Blm
+                                handlePilihan={handlePilihan}
+                                blm={pilihan.blm}
+                            />
+                        </Collapse>
+
+                        <Collapse in={activeStep === 2}>
+                            <Confirmation pilihan={pilihan} />
+                        </Collapse>
                     </div>
                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                         {activeStep < 2 ? (
@@ -80,6 +91,11 @@ export default function HorizontalLinearStepper() {
                                     </Button>
                                     <Button
                                         onClick={handleNext}
+                                        disabled={
+                                            (!pilihan.bem &&
+                                                activeStep === 0) ||
+                                            (!pilihan.blm && activeStep === 1)
+                                        }
                                         variant="outlined"
                                     >
                                         Selanjutnya

@@ -41,6 +41,10 @@ Route::middleware('auth:sanctum', 'token')->group(function () {
     Route::patch("/upload", [UserController::class, 'uploadPhoto'])->name('user.upload');
 });
 
-Route::post('/users/{$id}/image', [UserController::class, 'store'])->name('upload.image');
+Route::middleware('auth', 'isAdmin')->group(function () {
+    Route::get('/admin', function () {
+        return Inertia::render('Admin/Index');
+    })->name('admin.index');
+});
 
 require __DIR__ . '/auth.php';
