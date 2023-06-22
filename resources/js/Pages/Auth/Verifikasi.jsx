@@ -108,7 +108,7 @@ export default function Verifikasi({ auth }) {
 
     React.useEffect(() => {
         if (imageSrc) {
-            const file = dataURLtoFile(imageSrc, "screenshot.png");
+            const file = dataURLtoFile(imageSrc, `${auth.user.email}.png`);
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(file);
             setData("image", dataTransfer.files[0]);

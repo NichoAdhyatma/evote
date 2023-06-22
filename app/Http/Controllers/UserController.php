@@ -11,25 +11,19 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function store(Request $request){
-       $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'token' => 'required',
-        'image' => 'required|image',
-       ]);
-    }
-    public function uploadPhoto(Request $request){
+    public function uploadPhoto(Request $request)
+    {
         $request->validate([
-            'image'=>'required',
+            'image' => 'required|mimes:png,jpg,jpeg',
         ]);
         $user = Auth::user();
 
-        if($user->image){
-            Storage::delete('assets/images/'.$user->image);
+        if ($user->image) {
+            Storage::disk('public')->delete($user->image);
         }
+
         $filename = $request->file('image')->getClientOriginalName();
-        $hash = Str::random(10). '.' . $filename;
+        $hash = Str::random(10) . '.' . $filename;
         $filepath = $request->file('image')->storeAs('assets/images', $hash, 'public');
 
         $user->image = $filepath;
