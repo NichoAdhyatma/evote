@@ -4,25 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function store(Request $request, $id){
-       $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'token' => 'required',
-        'image' => 'required|image',
-       ]);
-       $user = User::findOrFail($id);
+    public function uploadPhoto(Request $request)
+    {
+        $request->validate([
+            'image' => 'required',
+        ]);
 
-       $imagePath =$request->file('image')->store('public/images');
-       $relativeImagePath = str_replace('public', 'storage', $imagePath);
+        $user = Auth::user();
 
-       $user->image = $relativeImagePath;
-       $user->save();
+        $filename = $request->file('image')->getClientOriginalName();
+        $filepath = $request->file('image')->storeAs('/assets/images', $filename, 'public');
 
-       return response()->json(['message' => 'Gambar berhasil disimpan']);
+        $user->image = $filepath;
+        $user->save();
+
+        return redirect("/onboard");
     }
 }
