@@ -3,8 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerifikasiController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -43,8 +42,13 @@ Route::middleware('auth:sanctum', 'token')->group(function () {
 
 Route::middleware('auth', 'isAdmin')->group(function () {
     Route::get('/admin', function () {
-        return Inertia::render('Admin/Index');
+        return Inertia::render('Admin/Index', [
+            'users' => User::where('level', 'user')->get(['id', 'name', 'email', 'token'])
+        ]);
     })->name('admin.index');
+    Route::post('/send-mail-to-users', [UserController::class, 'sendEmail'])->name('send-mail');
+    Route::post('/genrate-token', [UserController::class, 'generateToken'])->name('token');
+    Route::post('/delete-token', [UserController::class, 'deleteToken'])->name('delete-token');
 });
 
 require __DIR__ . '/auth.php';

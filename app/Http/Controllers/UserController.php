@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TokenMail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 
@@ -30,5 +32,40 @@ class UserController extends Controller
         $user->save();
 
         return redirect("/onboard");
+    }
+
+    public function sendEmail()
+    {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new TokenMail($user));
+        }
+
+        return redirect("/admin")->with("success", "Berhasil mengirim email");
+    }
+
+    public function generateToken()
+    {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            $user->token = $user->createToken("auth-token")->plainTextToken;
+            $user->save();
+        }
+
+        return redirect("/admin")->with("success", "Berhasil generate Token");
+    }
+
+    public function deleteToken() {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            $user->token = null;
+            $user->tokens()->delete();
+            $user->save();
+        }
+
+        return redirect("/admin")->with("success", "Berhasil menghapus Token");
     }
 }
