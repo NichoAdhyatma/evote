@@ -9,7 +9,7 @@ import PasswordInput from "@/Components/PasswordInput";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function Login({ status }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         email: "",
         token: "",
         remember: false,

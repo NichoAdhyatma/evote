@@ -1,14 +1,18 @@
 import DangerButton from "@/Components/DangerButton";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Guest from "@/Layouts/GuestLayout";
-import { Head, router } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
-import React from "react";
+import React, { useRef } from "react";
 import Webcam from "react-webcam";
 import { ToastContainer, toast } from "react-toastify";
 import AlertDialog from "@/Components/AlertDialog";
 
 export default function Verifikasi({ auth }) {
+    const { data, setData, processing, errors } = useForm({
+        image: null,
+    });
+
     const [deviceId, setDeviceId] = React.useState("");
     const [open, setOpen] = React.useState(false);
     const [devices, setDevices] = React.useState([]);
@@ -18,8 +22,23 @@ export default function Verifikasi({ auth }) {
 
     const webcamRef = React.useRef(null);
 
+    const dataURLtoFile = (dataURL, fileName) => {
+        const arr = dataURL.split(",");
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], fileName, { type: mime });
+    };
+
     const capture = React.useCallback(() => {
         setImageSrc(webcamRef.current.getScreenshot());
+
         setIsOnCam(false);
     }, [webcamRef]);
 
@@ -44,7 +63,7 @@ export default function Verifikasi({ auth }) {
         setOpen(false);
 
         if (res) {
-            router.visit("onboard");
+            uploadPhoto();
         }
     };
 
@@ -80,6 +99,22 @@ export default function Verifikasi({ auth }) {
             });
     };
 
+    const uploadPhoto = () => {
+        router.post("/upload", {
+            _method: "patch",
+            image: data.image,
+        });
+    };
+
+    React.useEffect(() => {
+        if (imageSrc) {
+            const file = dataURLtoFile(imageSrc, "screenshot.png");
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            setData("image", dataTransfer.files[0]);
+        }
+    }, [imageSrc]);
+
     return (
         <Guest>
             <Head title="Verifikasi" />
@@ -114,7 +149,7 @@ export default function Verifikasi({ auth }) {
                     </Select>
                 </FormControl>
             ) : devices.length > 0 ? null : (
-                <div className="my-4">
+                <div className="my-4 flex justify-center">
                     <PrimaryButton onClick={getCamAccess}>
                         Beri Akses Kamera
                     </PrimaryButton>

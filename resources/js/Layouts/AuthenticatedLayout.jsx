@@ -1,7 +1,7 @@
 import { router } from "@inertiajs/react";
-import PrimaryButton from "@/Components/PrimaryButton";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ApplicationLogo from "@/Components/ApplicationLogo";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function Authenticated({ user, children }) {
     const onSubmit = (e) => {
@@ -16,9 +16,12 @@ export default function Authenticated({ user, children }) {
                     <ApplicationLogo />
 
                     <form onSubmit={onSubmit}>
-                        <PrimaryButton startIcon={<LogoutIcon />} type="submit">
+                        <SecondaryButton
+                            startIcon={<LogoutIcon />}
+                            type="submit"
+                        >
                             Keluar
-                        </PrimaryButton>
+                        </SecondaryButton>
                     </form>
                 </div>
             </header>
