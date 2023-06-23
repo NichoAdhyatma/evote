@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import AlertDialog from "@/Components/AlertDialog";
 
 export default function Verifikasi({ auth }) {
-    const { data, setData} = useForm({
+    const { data, setData } = useForm({
         image: null,
     });
 
@@ -59,8 +59,9 @@ export default function Verifikasi({ auth }) {
         setOpen(true);
     };
 
-    const handleClose = (res) => {
+    const handleClose = (res, reason) => {
         setOpen(false);
+        if (reason && reason == "backdropClick") return;
 
         if (res) {
             uploadPhoto();

@@ -33,11 +33,11 @@ export default function AlertDialog({
                         dialogAction
                     ) : (
                         <>
-                            <SecondaryButton onClick={() => handleClose(false)}>
+                            <SecondaryButton onClick={(evemt, reason) => handleClose(false, reason)}>
                                 Tidak
                             </SecondaryButton>
                             <PrimaryButton
-                                onClick={() => handleClose(true)}
+                                onClick={(event, reason) => handleClose(true, reason)}
                                 autoFocus
                             >
                                 Iya yakin

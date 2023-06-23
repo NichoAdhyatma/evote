@@ -53,48 +53,46 @@ export default function AdminIndex({ auth, users }) {
         setnowOpen(opt);
         switch (opt) {
             case 1:
-                setOpen(true);
+                setOpen(!open);
                 break;
             case 2:
-                setOpen2(true);
+                setOpen2(!open2);
                 break;
             case 3:
-                setOpen3(true);
+                setOpen3(!open3);
                 break;
             case 4:
-                setOpen4(true);
+                setOpen4(!open4);
                 break;
             default:
                 break;
         }
     };
 
-    const handleResult = (val) => {
+    const handleResult = (val, reason) => {
+        if (reason && reason == "backdropClick") return handleDialog(nowOpen);
         switch (nowOpen) {
             case 1:
                 if (val) {
                     post(route("token"));
                 }
-                setOpen(false);
                 break;
             case 2:
                 if (val) {
                     post(route("delete-token"));
                 }
-                setOpen2(false);
                 break;
             case 3:
                 if (val) {
                     post(route("send-mail"));
                 }
-                setOpen3(false);
                 break;
             case 4:
-                setOpen4(false);
                 break;
             default:
                 break;
         }
+        handleDialog(nowOpen);
     };
 
     useEffect(() => {
