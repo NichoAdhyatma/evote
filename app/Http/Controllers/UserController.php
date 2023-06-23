@@ -36,7 +36,7 @@ class UserController extends Controller
 
     public function sendEmail()
     {
-        $users = User::all();
+        $users = User::where('level', 'user')->get();
 
         foreach ($users as $user) {
             Mail::to($user->email)->send(new TokenMail($user));
@@ -47,18 +47,21 @@ class UserController extends Controller
 
     public function generateToken()
     {
-        $users = User::all();
+        $users = User::where('level', 'user')->get();
 
         foreach ($users as $user) {
-            $user->token = $user->createToken("auth-token")->plainTextToken;
+            $user->tokens()->delete();
+            $token = $user->createToken("auth-token");
+            $user->token = $token->plainTextToken;
             $user->save();
         }
 
         return redirect("/admin")->with("success", "Berhasil generate Token");
     }
 
-    public function deleteToken() {
-        $users = User::all();
+    public function deleteToken()
+    {
+        $users = User::where('level', 'user')->get();
 
         foreach ($users as $user) {
             $user->token = null;

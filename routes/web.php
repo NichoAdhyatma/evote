@@ -43,7 +43,7 @@ Route::middleware('auth:sanctum', 'token')->group(function () {
 Route::middleware('auth', 'isAdmin')->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('Admin/Index', [
-            'users' => User::where('level', 'user')->get(['id', 'name', 'email', 'token'])
+            'users' => User::where('level', 'user')->get(['id', 'name', 'email', 'token', 'image'])
         ]);
     })->name('admin.index');
     Route::post('/send-mail-to-users', [UserController::class, 'sendEmail'])->name('send-mail');

@@ -5,23 +5,49 @@ import { Head, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { toast, ToastContainer } from "react-toastify";
-
-const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Nama", width: 200 },
-    { field: "email", headerName: "Email", width: 200 },
-    { field: "token", headerName: "Token", width: 250 },
-];
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function AdminIndex({ auth, users }) {
     const { post, processing } = useForm();
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [open3, setOpen3] = useState(false);
+    const [open4, setOpen4] = useState(false);
     const [nowOpen, setnowOpen] = useState(null);
+    const [url, setUrl] = useState(null);
     const { flash } = usePage().props;
 
     const rows = users;
+
+    const handleClickImage = (params) => {
+        setUrl(`/storage/${params.value}`);
+        handleDialog(4);
+    };
+
+    const columns = [
+        { field: "id", headerName: "ID", width: 70 },
+        {
+            field: "image",
+            headerName: "Image",
+            width: 100,
+            renderCell: (params) => {
+                return (
+                    <button onClick={() => handleClickImage(params)}>
+                        <img
+                            src={`/storage/${params.value}`}
+                            width={50}
+                            height={50}
+                            alt="foto-verifikasi"
+                            className="rounded-lg"
+                        />
+                    </button>
+                );
+            },
+        },
+        { field: "name", headerName: "Nama", width: 200 },
+        { field: "email", headerName: "Email", width: 200 },
+        { field: "token", headerName: "Token", width: 250 },
+    ];
 
     const handleDialog = (opt) => {
         setnowOpen(opt);
@@ -34,6 +60,9 @@ export default function AdminIndex({ auth, users }) {
                 break;
             case 3:
                 setOpen3(true);
+                break;
+            case 4:
+                setOpen4(true);
                 break;
             default:
                 break;
@@ -59,6 +88,9 @@ export default function AdminIndex({ auth, users }) {
                     post(route("send-mail"));
                 }
                 setOpen3(false);
+                break;
+            case 4:
+                setOpen4(false);
                 break;
             default:
                 break;
@@ -97,12 +129,12 @@ export default function AdminIndex({ auth, users }) {
                     >
                         Kirim Token
                     </SecondaryButton>
-                    <SecondaryButton
+                    <PrimaryButton
                         onClick={() => handleDialog(1)}
                         loading={processing}
                     >
                         Generate Token
-                    </SecondaryButton>
+                    </PrimaryButton>
                     <SecondaryButton
                         onClick={() => handleDialog(2)}
                         color="error"
@@ -130,6 +162,20 @@ export default function AdminIndex({ auth, users }) {
                     open={open3}
                     handleClose={handleResult}
                 />
+                <AlertDialog
+                    title={"Detail Gambar"}
+                    content={<img src={url} alt="gambar-verifikasi" />}
+                    open={open4}
+                    handleClose={handleResult}
+                    dialogAction={
+                        <PrimaryButton
+                            onClick={() => handleResult(true)}
+                            autoFocus
+                        >
+                            Tutup
+                        </PrimaryButton>
+                    }
+                />
             </div>
 
             <div className="flex justify-center w-full">
@@ -144,6 +190,7 @@ export default function AdminIndex({ auth, users }) {
                     pageSizeOptions={[5, 10, 25]}
                     checkboxSelection
                     disableRowSelectionOnClick
+                    autoHeight
                 />
             </div>
             <ToastContainer />
