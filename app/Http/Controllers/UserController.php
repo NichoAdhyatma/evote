@@ -29,6 +29,7 @@ class UserController extends Controller
         $filepath = $request->file('image')->storeAs('assets/images', $hash, 'public');
 
         $user->image = $filepath;
+        $user->verifikasi = true;
         $user->save();
 
         return redirect("/onboard");

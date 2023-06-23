@@ -1,7 +1,7 @@
 import AlertDialog from "@/Components/AlertDialog";
 import SecondaryButton from "@/Components/SecondaryButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, router, useForm, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { toast, ToastContainer } from "react-toastify";
@@ -99,7 +99,7 @@ export default function AdminIndex({ auth, users }) {
         if (flash.success) {
             toast.success(flash.success, {
                 position: "top-center",
-                autoClose: 10000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -139,6 +139,9 @@ export default function AdminIndex({ auth, users }) {
                         loading={processing}
                     >
                         Hapus Token
+                    </SecondaryButton>
+                    <SecondaryButton color="warning" loading={processing} onClick={() => router.reload()}>
+                        Reload Data
                     </SecondaryButton>
                 </div>
 

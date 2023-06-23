@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('token')->nullable();
             $table->enum('level', ['admin', 'user'])->default('user');
             $table->string('image')->nullable();
+            $table->boolean('verifikasi')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

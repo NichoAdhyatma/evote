@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if(Auth::user()->level === 'admin') {
+        if (Auth::user()->level === 'admin') {
             return redirect('/admin');
         }
 
@@ -46,6 +46,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        if (Auth::user()->level === 'user') {
+            $this->tokenRefresh();
+        }
 
         Auth::guard('web')->logout();
 
@@ -54,5 +57,18 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function tokenRefresh(): void
+    {
+        $user = Auth::user();
+
+        $user->verifikasi = false;
+
+        $user->tokens()->delete();
+
+        $user->token = $user->createToken('auth-token')->plainTextToken;
+
+        $user->save();
     }
 }

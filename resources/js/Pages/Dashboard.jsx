@@ -16,7 +16,7 @@ export default function Dashboard({ auth }) {
                     <OutlinedCard
                         title={"Calon Ketua-Wakil BEM FH dan Ketua BLM FH"}
                         content={"Lakukan proses pemilihan secara jujur"}
-                        onClick={() => router.visit("/bem")}
+                        onClick={() => router.visit("/pemilihan")}
                     />
                 </div>
             </div>
