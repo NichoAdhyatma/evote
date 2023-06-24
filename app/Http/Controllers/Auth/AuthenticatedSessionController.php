@@ -32,15 +32,11 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $user = Auth::user();
-
-        $token = $user->createToken('auth-token');
-
-        $user->token = $token->plainTextToken;
-
-        $user->save();
-
         $request->session()->regenerate();
+
+        if (Auth::user()->level === 'admin') {
+            return redirect('/admin');
+        }
 
         return redirect()->intended(RouteServiceProvider::VERIF);
     }
@@ -50,8 +46,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-
-        Auth::user()->tokens()->delete();
+        if (Auth::user()->level === 'user') {
+            $this->tokenRefresh();
+        }
 
         Auth::guard('web')->logout();
 
@@ -60,5 +57,18 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function tokenRefresh(): void
+    {
+        $user = Auth::user();
+
+        $user->verifikasi = false;
+
+        $user->tokens()->delete();
+
+        $user->token = $user->createToken('auth-token')->plainTextToken;
+
+        $user->save();
     }
 }

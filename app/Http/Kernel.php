@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\isVerif;
 use App\Http\Middleware\tokenActive;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -67,5 +69,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'token' => tokenActive::class,
+        'isAdmin' => isAdmin::class,
+        'isVerif' => isVerif::class,
     ];
 }

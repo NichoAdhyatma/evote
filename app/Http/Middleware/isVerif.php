@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class tokenActive
+class isVerif
 {
     /**
      * Handle an incoming request.
@@ -20,11 +20,7 @@ class tokenActive
         $haveTokenAndUser = $user->tokens()->count() > 0 && $user->level === 'user';
 
         if ($haveTokenAndUser) {
-            return $user->verifikasi ?  $next($request) : redirect("/verifikasi");
-        }
-
-        if ($user->level === 'admin') {
-            return redirect('/');
+            return $user->verifikasi ? redirect("/onboard") : $next($request);
         }
 
         Auth::guard('web')->logout();

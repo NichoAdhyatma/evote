@@ -1,6 +1,6 @@
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Confirmation({ auth }) {
+export default function Confirmation({ pilihan }) {
     return (
         <>
             <h1 className="font-semibold text-center mt-4">
@@ -20,6 +20,7 @@ export default function Confirmation({ auth }) {
                         height={250}
                     />
                     <p>Calon Ketua Wakil BEM FH</p>
+                    <p>{pilihan.bem}</p>
                 </div>
                 <div className="flex flex-col gap-4 items-center">
                     <img
@@ -29,6 +30,7 @@ export default function Confirmation({ auth }) {
                         height={250}
                     />
                     <p>Calon Ketua BLM FH</p>
+                    <p>{pilihan.blm}</p>
                 </div>
             </div>
         </>
