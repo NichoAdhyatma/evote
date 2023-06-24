@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdminnRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class AdminnRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->key === 'admin';
+        return $this->key === 'admin' && Auth::user()->level === 'admin';
     }
 
     /**

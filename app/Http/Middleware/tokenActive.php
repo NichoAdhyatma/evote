@@ -20,7 +20,7 @@ class tokenActive
         $haveTokenAndUser = $user->level === 'user';
 
         if ($haveTokenAndUser) {
-            return $user->verifikasi ?  $next($request) : redirect("/verifikasi");
+            return $user->verifikasi ?  $next($request) : abort(401);
         }
 
         if ($user->level === 'admin') {

@@ -32,7 +32,7 @@ export default function Authenticated({ user, children }) {
                 </h2>
             </div>
 
-            <main className="flex flex-col items-start gap-2 max-w-5xl mx-auto p-8 bg-white shadow-md mt-4 rounded-sm">
+            <main className="flex flex-col items-start gap-2 max-w-6xl mx-auto p-8 bg-white shadow-md mt-4 rounded-sm">
                 {children}
             </main>
         </div>

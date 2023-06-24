@@ -20,7 +20,7 @@ class isVerif
         $haveTokenAndUser = $user->level === 'user';
 
         if ($haveTokenAndUser) {
-            return $user->verifikasi ? redirect("/onboard") : $next($request);
+            return $user->verifikasi ? abort(403) : $next($request);
         }
 
         Auth::guard('web')->logout();

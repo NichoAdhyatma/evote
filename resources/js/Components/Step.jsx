@@ -1,16 +1,18 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Bem from "@/Pages/Pemilihan/Bem";
 import Blm from "@/Pages/Pemilihan/Blm";
 import Confirmation from "@/Pages/Pemilihan/Confrimation";
 import PrimaryButton from "./PrimaryButton";
-import { router } from "@inertiajs/react";
-import { Collapse } from "@mui/material";
+import {
+    Box,
+    Collapse,
+    Stepper,
+    Step,
+    StepLabel,
+    Button,
+    Typography,
+} from "@mui/material";
+import AlertDialog from "./AlertDialog";
 
 const steps = [
     "Calon Ketua - Wakil BEM",
@@ -18,8 +20,27 @@ const steps = [
     "Konfirmasi Pilihan",
 ];
 
-export default function HorizontalLinearStepper({ handlePilihan, pilihan, submit }) {
+export default function HorizontalLinearStepper({
+    handlePilihan,
+    pilihan,
+    submit,
+}) {
     const [activeStep, setActiveStep] = React.useState(0);
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (res, reason) => {
+        setOpen(false);
+        if (reason && reason == "backdropClick") return;
+
+        if (res) {
+            submit();
+        }
+    };
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -107,7 +128,7 @@ export default function HorizontalLinearStepper({ handlePilihan, pilihan, submit
                                 <PrimaryButton
                                     size="medium w-full"
                                     color="success"
-                                    onClick={submit}
+                                    onClick={handleClickOpen}
                                 >
                                     Konfirmasi
                                 </PrimaryButton>
@@ -122,6 +143,13 @@ export default function HorizontalLinearStepper({ handlePilihan, pilihan, submit
                             </div>
                         )}
                     </Box>
+                    <AlertDialog
+                        title={"Apa kamu sudah yakin ?"}
+                        content={"Periksa ulang pilihan mu .."}
+                        open={open}
+                        handleClose={handleClose}
+                        fullWidth
+                    />
                 </React.Fragment>
             )}
         </Box>

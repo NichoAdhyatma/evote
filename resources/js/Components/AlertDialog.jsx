@@ -13,6 +13,7 @@ export default function AlertDialog({
     content,
     open,
     dialogAction,
+    ...props
 }) {
     return (
         <div>
@@ -21,6 +22,7 @@ export default function AlertDialog({
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                {...props}
             >
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 <DialogContent>
@@ -33,11 +35,17 @@ export default function AlertDialog({
                         dialogAction
                     ) : (
                         <>
-                            <SecondaryButton onClick={(evemt, reason) => handleClose(false, reason)}>
+                            <SecondaryButton
+                                onClick={(evemt, reason) =>
+                                    handleClose(false, reason)
+                                }
+                            >
                                 Tidak
                             </SecondaryButton>
                             <PrimaryButton
-                                onClick={(event, reason) => handleClose(true, reason)}
+                                onClick={(event, reason) =>
+                                    handleClose(true, reason)
+                                }
                                 autoFocus
                             >
                                 Iya yakin

@@ -36,6 +36,8 @@ class AuthenticatedSessionController extends Controller
 
         if (Auth::user()->level === 'admin') {
             return redirect('/admin');
+        } else if (Auth::user()->verifikasi) {
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
 
         return redirect()->intended(RouteServiceProvider::VERIF);

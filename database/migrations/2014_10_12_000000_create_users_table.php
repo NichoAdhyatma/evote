@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('level', ['admin', 'user'])->default('user');
             $table->string('image')->nullable();
             $table->boolean('verifikasi')->default(false);
-            $table->boolean('pemilihan')->default(false);
+            $table->boolean('pemilihan')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

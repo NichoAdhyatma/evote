@@ -9,8 +9,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -51,6 +49,6 @@ class RegisteredUserController extends Controller
 
         $user->save();
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::VERIF);
     }
 }

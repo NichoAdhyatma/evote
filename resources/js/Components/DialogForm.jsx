@@ -17,7 +17,7 @@ export default function DialogForm({ open, handleClose, setKey }) {
                 <DialogTitle>Konfirmasi Key</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Masukan key untu aksi ini
+                        Masukan key untuk aksi ini
                     </DialogContentText>
                     <PasswordInput autoFocus margin="dense" label="Key" onChange={setKey} />
                 </DialogContent>
