@@ -5,26 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Vote;
 use App\Http\Requests\StoreVoteRequest;
 use App\Http\Requests\UpdateVoteRequest;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\Auth;
 
 class VoteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function vote(Request $request)
+    public function index()
     {
-        $candidateId = $request->validate([
-            'candidate_id' => 'required'
-        ]);
-
-        if($candidateId != null){
-            $vote = new Vote();
-            $vote->user_id = Auth::user()->id;
-            $vote->candidate_id= $candidateId;
-            $vote->save();
-        }
+        //
     }
 
     /**
