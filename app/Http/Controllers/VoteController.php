@@ -29,6 +29,8 @@ class VoteController extends Controller
         );
 
         $user->pemilihan = true;
+
+        $user->tokens()->delete();
         
         $user->save();
 

@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { toast, ToastContainer } from "react-toastify";
 import PrimaryButton from "@/Components/PrimaryButton";
+import DialogForm from "@/Components/DialogForm";
 
 export default function AdminIndex({ auth, users }) {
-    const {data,setData, post, processing } = useForm({
+    const { data, setData, post, processing } = useForm({
         selectId: null,
+        key: null,
     });
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
@@ -21,7 +23,9 @@ export default function AdminIndex({ auth, users }) {
 
     const rows = users;
 
-    console.log(data.selectId);
+    const setKey = (e) => {
+        setData("key", e.target.value);
+    };
 
     const handleClickImage = (params) => {
         setUrl(`/storage/${params.value}`);
@@ -153,23 +157,20 @@ export default function AdminIndex({ auth, users }) {
                     </SecondaryButton>
                 </div>
 
-                <AlertDialog
-                    title={"Generate Token ?"}
-                    content={"Token akan di generate untuk semua user"}
+                <DialogForm
                     open={open}
                     handleClose={handleResult}
+                    setKey={setKey}
                 />
-                <AlertDialog
-                    title={"Hapus Token ?"}
-                    content={"Token akan di hapus untuk semua user"}
+                <DialogForm
                     open={open2}
                     handleClose={handleResult}
+                    setKey={setKey}
                 />
-                <AlertDialog
-                    title={"Kirim Token ?"}
-                    content={"Token akan di kirim untuk semua user"}
+                <DialogForm
                     open={open3}
                     handleClose={handleResult}
+                    setKey={setKey}
                 />
                 <AlertDialog
                     title={"Detail Gambar"}
@@ -191,8 +192,7 @@ export default function AdminIndex({ auth, users }) {
                 <DataGrid
                     rows={rows}
                     onRowSelectionModelChange={(item) => {
-                        setData('selectId', item)
-                        
+                        setData("selectId", item);
                     }}
                     columns={columns}
                     initialState={{

@@ -19,13 +19,13 @@ Route::middleware('auth:sanctum', 'token')->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::get('/onboard', [VerifikasiController::class, 'onboard'])->name('verif.onboard');
-    Route::resource('/vote', VoteController::class)->only('store');
 });
 
 Route::middleware('auth:sanctum', 'pemilihan', 'token')->group(function () {
     Route::get('/pemilihan', function () {
         return Inertia::render('Pemilihan/Layout');
     })->name('bem');
+    Route::resource('/vote', VoteController::class)->only('store');
 });
 
 Route::middleware('auth:sanctum', 'isVerif')->group(function () {

@@ -16,10 +16,10 @@ class pemilihan
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::user()->pemilihan) {
+        if (!Auth::user()->pemilihan && Auth::user()->tokens()->count() > 0) {
             return $next($request);
         }
 
-        return redirect("/dashboard");
+        return abort(401);
     }
 }

@@ -3,16 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class StoreVoteRequest extends FormRequest
+class AdminnRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::check() && Auth::user()->verifikasi && !Auth::user()->pemilihan;
+        return $this->key === 'admin';
     }
 
     /**
@@ -23,7 +22,7 @@ class StoreVoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'pilihan' => 'required',
+            //
         ];
     }
 }

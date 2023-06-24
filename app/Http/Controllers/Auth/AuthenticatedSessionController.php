@@ -63,12 +63,6 @@ class AuthenticatedSessionController extends Controller
     {
         $user = Auth::user();
 
-        $user->verifikasi = false;
-
-        $user->tokens()->delete();
-
-        $user->token = $user->createToken('auth-token')->plainTextToken;
-
         $user->save();
     }
 }

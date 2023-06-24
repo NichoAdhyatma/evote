@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminnRequest;
 use App\Mail\TokenMail;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,7 +14,7 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function getUser(Request $request)
+    public function getUser(AdminnRequest $request)
     {
         $users = [];
         if ($request->selectId) {
@@ -45,7 +46,7 @@ class UserController extends Controller
         return redirect("/onboard");
     }
 
-    public function sendEmail(Request $request)
+    public function sendEmail(AdminnRequest $request)
     {
         $users = $this->getUser($request);
 
@@ -56,7 +57,7 @@ class UserController extends Controller
         return redirect("/admin")->with("success", "Berhasil mengirim email");
     }
 
-    public function generateToken(Request $request)
+    public function generateToken(AdminnRequest $request)
     {
         $users = $this->getUser($request);
 
@@ -70,7 +71,7 @@ class UserController extends Controller
         return redirect("/admin")->with("success", "Berhasil generate Token");
     }
 
-    public function deleteToken(Request $request)
+    public function deleteToken(AdminnRequest $request)
     {
         $users = $this->getUser($request);
 
