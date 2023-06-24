@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerifikasiController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,5 +43,7 @@ Route::middleware('auth:sanctum', 'token')->group(function () {
 });
 
 Route::post('/users/{$id}/image', [UserController::class, 'store'])->name('upload.image');
+Route::post('/candidates/{$id}/vote', [VoteController::class, 'vote'])->name('vote');
+
 
 require __DIR__ . '/auth.php';

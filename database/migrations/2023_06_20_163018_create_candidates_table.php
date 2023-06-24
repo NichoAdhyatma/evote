@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->string('candidate_name');
-            $table->timestamp('vote_count');
+            $table->enum('level', ['bem', 'blm']);
             $table->timestamps();
         });
     }
