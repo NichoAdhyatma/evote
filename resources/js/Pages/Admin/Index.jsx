@@ -8,7 +8,9 @@ import { toast, ToastContainer } from "react-toastify";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function AdminIndex({ auth, users }) {
-    const { post, processing } = useForm();
+    const {data,setData, post, processing } = useForm({
+        selectId: null,
+    });
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [open3, setOpen3] = useState(false);
@@ -18,6 +20,8 @@ export default function AdminIndex({ auth, users }) {
     const { flash } = usePage().props;
 
     const rows = users;
+
+    console.log(data.selectId);
 
     const handleClickImage = (params) => {
         setUrl(`/storage/${params.value}`);
@@ -140,7 +144,11 @@ export default function AdminIndex({ auth, users }) {
                     >
                         Hapus Token
                     </SecondaryButton>
-                    <SecondaryButton color="warning" loading={processing} onClick={() => router.reload()}>
+                    <SecondaryButton
+                        color="warning"
+                        loading={processing}
+                        onClick={() => router.reload()}
+                    >
                         Reload Data
                     </SecondaryButton>
                 </div>
@@ -182,6 +190,10 @@ export default function AdminIndex({ auth, users }) {
             <div className="flex justify-center w-full">
                 <DataGrid
                     rows={rows}
+                    onRowSelectionModelChange={(item) => {
+                        setData('selectId', item)
+                        
+                    }}
                     columns={columns}
                     initialState={{
                         pagination: {
