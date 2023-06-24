@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerifikasiController;
+use App\Http\Controllers\VoteController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,13 +14,18 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth:sanctum', 'token')->group(function () {
-    Route::get('/pemilihan', function () {
-        return Inertia::render('Pemilihan/Layout');
-    })->name('bem');
+
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::get('/onboard', [VerifikasiController::class, 'onboard'])->name('verif.onboard');
+    Route::resource('/vote', VoteController::class)->only('store');
+});
+
+Route::middleware('auth:sanctum', 'pemilihan', 'token')->group(function () {
+    Route::get('/pemilihan', function () {
+        return Inertia::render('Pemilihan/Layout');
+    })->name('bem');
 });
 
 Route::middleware('auth:sanctum', 'isVerif')->group(function () {

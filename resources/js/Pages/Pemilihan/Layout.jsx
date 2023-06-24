@@ -3,7 +3,7 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { useForm } from "@inertiajs/react";
 
 export default function Layout({ auth }) {
-    const { data, setData } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         pilihan: {
             bem: null,
             blm: null,
@@ -20,12 +20,15 @@ export default function Layout({ auth }) {
         }));
     };
 
-    console.log(data.pilihan);
+    const submitPilihan = (e) => {
+        e.preventDefault();
+        post(route("vote.store"));
+    }
 
     return (
         <Authenticated user={auth.user}>
             <div className="w-full">
-                <HorizontalLinearStepper handlePilihan={handlePilihan} pilihan={data.pilihan} />
+                <HorizontalLinearStepper handlePilihan={handlePilihan} pilihan={data.pilihan} submit={submitPilihan} />
             </div>
         </Authenticated>
     );

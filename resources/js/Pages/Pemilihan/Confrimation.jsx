@@ -1,5 +1,3 @@
-import PrimaryButton from "@/Components/PrimaryButton";
-
 export default function Confirmation({ pilihan }) {
     return (
         <>

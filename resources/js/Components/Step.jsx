@@ -18,7 +18,7 @@ const steps = [
     "Konfirmasi Pilihan",
 ];
 
-export default function HorizontalLinearStepper({ handlePilihan, pilihan }) {
+export default function HorizontalLinearStepper({ handlePilihan, pilihan, submit }) {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
@@ -107,7 +107,7 @@ export default function HorizontalLinearStepper({ handlePilihan, pilihan }) {
                                 <PrimaryButton
                                     size="medium w-full"
                                     color="success"
-                                    onClick={() => router.visit("/dashboard")}
+                                    onClick={submit}
                                 >
                                     Konfirmasi
                                 </PrimaryButton>

@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isVerif;
+use App\Http\Middleware\pemilihan;
 use App\Http\Middleware\tokenActive;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -71,5 +72,6 @@ class Kernel extends HttpKernel
         'token' => tokenActive::class,
         'isAdmin' => isAdmin::class,
         'isVerif' => isVerif::class,
+        'pemilihan' => pemilihan::class,
     ];
 }
