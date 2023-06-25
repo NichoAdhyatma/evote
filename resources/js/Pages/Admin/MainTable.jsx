@@ -15,9 +15,7 @@ export default function MainTable({ users }) {
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [open3, setOpen3] = useState(false);
-    const [open4, setOpen4] = useState(false);
     const [nowOpen, setnowOpen] = useState(null);
-    const [url, setUrl] = useState(null);
     const { flash } = usePage().props;
 
     const rows = users;
@@ -26,34 +24,11 @@ export default function MainTable({ users }) {
         setData("key", e.target.value);
     };
 
-    const handleClickImage = (params) => {
-        setUrl(`/storage/${params.value}`);
-        handleDialog(4);
-    };
-
     const columns = [
         { field: "id", headerName: "ID", width: 50 },
-        {
-            field: "image",
-            headerName: "Image",
-            width: 100,
-            renderCell: (params) => {
-                return (
-                    <button onClick={() => handleClickImage(params)}>
-                        <img
-                            src={`/storage/${params.value}`}
-                            width={50}
-                            height={50}
-                            alt="foto-verifikasi"
-                            className="rounded-lg"
-                        />
-                    </button>
-                );
-            },
-        },
-        { field: "name", headerName: "Nama", width: 200 },
-        { field: "email", headerName: "Email", width: 200 },
-        { field: "token", headerName: "Token", width: 200 },
+        { field: "name", headerName: "Nama", flex: 1 },
+        { field: "email", headerName: "Email", flex: 1 },
+        { field: "token", headerName: "Token", flex: 1 },
     ];
 
     const handleDialog = (opt) => {
@@ -67,9 +42,6 @@ export default function MainTable({ users }) {
                 break;
             case 3:
                 setOpen3(!open3);
-                break;
-            case 4:
-                setOpen4(!open4);
                 break;
 
             default:
@@ -95,8 +67,6 @@ export default function MainTable({ users }) {
                     post(route("send-mail"));
                 }
                 break;
-            case 4:
-                break;
 
             default:
                 break;
@@ -116,6 +86,7 @@ export default function MainTable({ users }) {
                 progress: undefined,
                 theme: "light",
             });
+            flash.success = null;
         }
     }, [flash.success]);
 
@@ -170,20 +141,6 @@ export default function MainTable({ users }) {
                     open={open3}
                     handleClose={handleResult}
                     setKey={setKey}
-                />
-                <AlertDialog
-                    title={"Detail Gambar"}
-                    content={<img src={url} alt="gambar-verifikasi" />}
-                    open={open4}
-                    handleClose={handleResult}
-                    dialogAction={
-                        <PrimaryButton
-                            onClick={() => handleResult(true)}
-                            autoFocus
-                        >
-                            Tutup
-                        </PrimaryButton>
-                    }
                 />
             </div>
 
