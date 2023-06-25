@@ -46,6 +46,6 @@ class VoteController extends Controller
             } else return redirect("/admin");
         }
 
-        return redirect('/admin')->with("success", "User berhasil di ban");
+        return redirect('/admin');
     }
 }
