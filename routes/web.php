@@ -6,12 +6,17 @@ use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\VoteController;
 use App\Models\Candidate;
 use App\Models\User;
+use App\Models\Vote;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render(
-        'Welcome'
+        'Welcome',
+        [
+            'candidate' => Candidate::all(),
+            'votes' => Vote::all(),
+        ]
     );
 });
 

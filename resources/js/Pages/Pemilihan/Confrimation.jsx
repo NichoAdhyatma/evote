@@ -16,6 +16,11 @@ export default function Confirmation({ pilihan, candidate }) {
                         className="flex flex-col gap-4 items-center"
                     >
                         <div className="h-60">
+                            <p className="text-center font-bold mb-2">
+                                {index === 0
+                                    ? "Calon Ketua Wakil BEM"
+                                    : "Calon Ketua BLM"}
+                            </p>
                             <img
                                 src={`/storage/${item.image}`}
                                 alt="kandidat"
@@ -24,7 +29,7 @@ export default function Confirmation({ pilihan, candidate }) {
                                 className="min-h-[250]"
                             />
                         </div>
-                        <p className="font-bold mt-4">{item.candidate_name}</p>
+                        <p className="font-bold mt-8">{item.candidate_name}</p>
                     </div>
                 ))}
             </div>
