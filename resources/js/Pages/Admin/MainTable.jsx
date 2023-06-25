@@ -51,9 +51,9 @@ export default function MainTable({ users }) {
                 );
             },
         },
-        { field: "name", headerName: "Nama", flex: 1 },
-        { field: "email", headerName: "Email", flex: 1 },
-        { field: "token", headerName: "Token", flex: 1 },
+        { field: "name", headerName: "Nama", width: 200 },
+        { field: "email", headerName: "Email", width: 200 },
+        { field: "token", headerName: "Token", width: 200 },
     ];
 
     const handleDialog = (opt) => {

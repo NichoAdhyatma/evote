@@ -73,7 +73,7 @@ export default function RekapSuara({ users }) {
             headerName: "Pemilihan",
             width: 110,
             renderCell: (params) =>
-                params.value ? (
+                params.value === 1 ? (
                     <Tooltip title="Suara sah">
                         <CheckCircleRoundedIcon color="success" />
                     </Tooltip>

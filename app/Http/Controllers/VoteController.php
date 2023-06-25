@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminnRequest;
 use App\Models\Vote;
 use App\Http\Requests\StoreVoteRequest;
-use App\Http\Requests\UpdateVoteRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
