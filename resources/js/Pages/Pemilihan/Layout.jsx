@@ -2,7 +2,7 @@ import HorizontalLinearStepper from "@/Components/Step";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { useForm } from "@inertiajs/react";
 
-export default function Layout({ auth }) {
+export default function Layout({ auth, candidate }) {
     const { data, setData, post, processing, errors } = useForm({
         pilihan: {
             bem: null,
@@ -31,6 +31,7 @@ export default function Layout({ auth }) {
                     handlePilihan={handlePilihan}
                     pilihan={data.pilihan}
                     submit={submitPilihan}
+                    candidate={candidate}
                 />
             </div>
         </Authenticated>

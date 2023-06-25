@@ -90,10 +90,10 @@ export default function RekapSuara({ users }) {
             renderCell: (params) => {
                 return (
                     <PrimaryButton
-                        color={params.row.pemilihan ? "warning" : "success"}
+                        color={params.row.pemilihan === 1 ? "warning" : "success"}
                         onClick={() => handleOpen(params.id)}
                     >
-                        {params.row.pemilihan ? "Tidak Sah" : "Sah"}
+                        {params.row.pemilihan === 1 ? "Tidak Sah" : "Sah"}
                     </PrimaryButton>
                 );
             },
@@ -130,9 +130,6 @@ export default function RekapSuara({ users }) {
             <div className="flex justify-center w-full">
                 <DataGrid
                     rows={users}
-                    onRowSelectionModelChange={(item) => {
-                        setData("selectId", item);
-                    }}
                     columns={columns}
                     initialState={{
                         pagination: {

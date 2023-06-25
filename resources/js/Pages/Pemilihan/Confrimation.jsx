@@ -1,4 +1,4 @@
-export default function Confirmation({ pilihan }) {
+export default function Confirmation({ pilihan, candidate }) {
     return (
         <>
             <h1 className="font-semibold text-center mt-4">
@@ -9,27 +9,24 @@ export default function Confirmation({ pilihan }) {
                 Apakah pilihan anda dibawah ini sudah pasti?
             </p>
 
-            <div className="flex flex-wrap gap-8 items-center w-full justify-center">
-                <div className="flex flex-col gap-4 items-center">
-                    <img
-                        src="/assets/profile.png"
-                        alt=""
-                        width={250}
-                        height={250}
-                    />
-                    <p>Calon Ketua Wakil BEM FH</p>
-                    <p>{pilihan.bem}</p>
-                </div>
-                <div className="flex flex-col gap-4 items-center">
-                    <img
-                        src="/assets/profile.png"
-                        alt=""
-                        width={250}
-                        height={250}
-                    />
-                    <p>Calon Ketua BLM FH</p>
-                    <p>{pilihan.blm}</p>
-                </div>
+            <div className="flex items-center gap-8 justify-center">
+                {candidate.map((item, index) => (
+                    <div
+                        key={index}
+                        className="flex flex-col gap-4 items-center"
+                    >
+                        <div className="h-60">
+                            <img
+                                src={`/storage/${item.image}`}
+                                alt="kandidat"
+                                width={250}
+                                height={250}
+                                className="min-h-[250]"
+                            />
+                        </div>
+                        <p className="font-bold mt-4">{item.candidate_name}</p>
+                    </div>
+                ))}
             </div>
         </>
     );

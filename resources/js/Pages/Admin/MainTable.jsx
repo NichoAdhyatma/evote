@@ -1,9 +1,7 @@
-import AlertDialog from "@/Components/AlertDialog";
 import SecondaryButton from "@/Components/SecondaryButton";
-import { router, useForm, usePage } from "@inertiajs/react";
-import { useEffect, useState } from "react";
+import { router, useForm } from "@inertiajs/react";
+import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { toast, ToastContainer } from "react-toastify";
 import PrimaryButton from "@/Components/PrimaryButton";
 import DialogForm from "@/Components/DialogForm";
 
@@ -16,7 +14,6 @@ export default function MainTable({ users }) {
     const [open2, setOpen2] = useState(false);
     const [open3, setOpen3] = useState(false);
     const [nowOpen, setnowOpen] = useState(null);
-    const { flash } = usePage().props;
 
     const rows = users;
 
@@ -73,22 +70,6 @@ export default function MainTable({ users }) {
         }
         handleDialog(nowOpen);
     };
-
-    useEffect(() => {
-        if (flash.success) {
-            toast.success(flash.success, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            flash.success = null;
-        }
-    }, [flash.success]);
 
     return (
         <>
@@ -156,13 +137,12 @@ export default function MainTable({ users }) {
                             paginationModel: { page: 0, pageSize: 5 },
                         },
                     }}
-                    pageSizeOptions={[5, 10, 25]}
+                    pageSizeOptions={[5, 10, 25, 50, 100]}
                     checkboxSelection
                     disableRowSelectionOnClick
                     autoHeight
                 />
             </div>
-            <ToastContainer />
         </>
     );
 }

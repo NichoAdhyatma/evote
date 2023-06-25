@@ -1,20 +1,35 @@
 import * as React from "react";
-import { Box } from "@mui/material";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
+import { Box, Tab } from "@mui/material";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import MainTable from "./MainTable";
-import { Head, useForm } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import RekapSuara from "./RekapSuara";
+import Kandidat from "./Kandidat";
+import { toast, ToastContainer } from "react-toastify";
+import { useEffect } from "react";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 
-export default function LabTabs({ auth, users }) {
+export default function LabTabs({ auth, users, candidate, flash }) {
     const [value, setValue] = React.useState("1");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    useEffect(() => {
+        if (flash.success) {
+            toast.success(flash.success, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    }, [flash.success]);
 
     return (
         <Authenticated user={auth.user}>
@@ -29,6 +44,7 @@ export default function LabTabs({ auth, users }) {
                         >
                             <Tab label="Tabel Utama" value="1" />
                             <Tab label="Rekap Suara" value="2" />
+                            <Tab label="Kandidat" value="3" />
                         </TabList>
                     </Box>
                     <TabPanel value="1">
@@ -41,8 +57,12 @@ export default function LabTabs({ auth, users }) {
                             )}
                         />
                     </TabPanel>
+                    <TabPanel value="3">
+                        <Kandidat candidate={candidate} />
+                    </TabPanel>
                 </TabContext>
             </div>
+            <ToastContainer />
         </Authenticated>
     );
 }

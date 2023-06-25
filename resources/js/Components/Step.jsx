@@ -24,6 +24,7 @@ export default function HorizontalLinearStepper({
     handlePilihan,
     pilihan,
     submit,
+    candidate,
 }) {
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -82,6 +83,9 @@ export default function HorizontalLinearStepper({
                             <Bem
                                 handlePilihan={handlePilihan}
                                 bem={pilihan.bem}
+                                candidate={candidate.filter(
+                                    (item) => item.level === "bem"
+                                )}
                             />
                         </Collapse>
 
@@ -89,11 +93,21 @@ export default function HorizontalLinearStepper({
                             <Blm
                                 handlePilihan={handlePilihan}
                                 blm={pilihan.blm}
+                                candidate={candidate.filter(
+                                    (item) => item.level === "blm"
+                                )}
                             />
                         </Collapse>
 
                         <Collapse in={activeStep === 2}>
-                            <Confirmation pilihan={pilihan} />
+                            <Confirmation
+                                pilihan={pilihan}
+                                candidate={candidate.filter(
+                                    (item) =>
+                                        item.id === pilihan.bem ||
+                                        item.id === pilihan.blm
+                                )}
+                            />
                         </Collapse>
                     </div>
                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
