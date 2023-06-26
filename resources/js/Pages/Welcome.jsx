@@ -11,6 +11,8 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
+import ApplicationLogo from "@/Components/ApplicationLogo";
+import { useEffect } from "react";
 
 ChartJS.register(
     CategoryScale,
@@ -49,7 +51,7 @@ export default function Welcome({ auth, candidate, votes }) {
                         .length,
                     votes.length,
                 ],
-                backgroundColor: "rgba(53, 162, 235, 0.5)",
+                backgroundColor: "rgba(53, 1, 235, 0.5)",
             },
         ],
     };
@@ -58,11 +60,11 @@ export default function Welcome({ auth, candidate, votes }) {
         responsive: true,
         plugins: {
             legend: {
-                position: "top",
+                position: "bottom",
             },
             title: {
                 display: true,
-                text: "Chart.js Bar Chart",
+                text: "Data hasil suara saat ini",
             },
         },
     };
@@ -104,10 +106,10 @@ export default function Welcome({ auth, candidate, votes }) {
             </div>
 
             <div className="mt-20 max-w-7xl mx-auto">
-                <h1 className="text-center text-3xl font-semibold">
-                    Website Evote
-                    <Bar data={data} options={options} />
-                </h1>
+                <div className="text-center my-6">
+                    <ApplicationLogo />
+                </div>
+                <Bar data={data} options={options} />
             </div>
         </>
     );

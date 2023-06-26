@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
-export default function LabTabs({ auth, users, candidate, flash }) {
+export default function LabTabs({ auth, users, candidate, flash, suara }) {
     const [value, setValue] = React.useState("1");
 
     const handleChange = (event, newValue) => {
@@ -52,6 +52,7 @@ export default function LabTabs({ auth, users, candidate, flash }) {
                     </TabPanel>
                     <TabPanel value="2">
                         <RekapSuara
+                            suara={suara}
                             users={users.filter(
                                 (item) => item.pemilihan !== null
                             )}

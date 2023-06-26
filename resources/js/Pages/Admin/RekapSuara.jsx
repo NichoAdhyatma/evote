@@ -8,7 +8,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { Tooltip } from "@mui/material";
 import AlertDialog from "@/Components/AlertDialog";
 
-export default function RekapSuara({ users }) {
+export default function RekapSuara({ users, suara }) {
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [url, setUrl] = useState("");
@@ -73,7 +73,7 @@ export default function RekapSuara({ users }) {
             headerName: "Pemilihan",
             width: 110,
             renderCell: (params) =>
-                params.value === 1 ? (
+                params.value == 1 ? (
                     <Tooltip title="Suara sah">
                         <CheckCircleRoundedIcon color="success" />
                     </Tooltip>
@@ -90,10 +90,12 @@ export default function RekapSuara({ users }) {
             renderCell: (params) => {
                 return (
                     <PrimaryButton
-                        color={params.row.pemilihan === 1 ? "warning" : "success"}
+                        color={
+                            params.row.pemilihan == 1 ? "warning" : "success"
+                        }
                         onClick={() => handleOpen(params.id)}
                     >
-                        {params.row.pemilihan === 1 ? "Tidak Sah" : "Sah"}
+                        {params.row.pemilihan == 1 ? "Tidak Sah" : "Sah"}
                     </PrimaryButton>
                 );
             },
@@ -113,14 +115,8 @@ export default function RekapSuara({ users }) {
 
             <div className="my-4 flex justify-end w-full gap-4">
                 <div className="flex items-center gap-4 mx-4">
-                    <div>
-                        Sah :{" "}
-                        {users.filter((item) => item.pemilihan === 1).length}
-                    </div>
-                    <div>
-                        Tidak Sah :{" "}
-                        {users.filter((item) => item.pemilihan === 0).length}
-                    </div>
+                    <div>Sah : {suara.sah}</div>
+                    <div>Tidak Sah : {suara.tidakSah}</div>
                 </div>
                 <PrimaryButton onClick={() => router.reload()} color="info">
                     Refresh

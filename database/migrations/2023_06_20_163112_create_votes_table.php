@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('bem_id')->nullable();
             $table->foreignId('blm_id')->nullable();
+            $table->enum("status", ["sah", "tidak-sah"]);
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ Route::get('/', function () {
         'Welcome',
         [
             'candidate' => Candidate::all(),
-            'votes' => Vote::all(),
+            'votes' => Vote::where('status', 'sah')->get(["blm_id", "bem_id"]),
         ]
     );
 });
@@ -46,6 +46,10 @@ Route::middleware('auth', 'isAdmin')->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('Admin/Index', [
             'users' => User::where('level', 'user')->get(['id', 'name', 'email', 'token', 'image', 'pemilihan']),
+            'suara' => [
+                'sah' => Vote::where('status', 'sah')->count(),
+                'tidakSah' =>  Vote::where('status', 'tidak-sah')->count(),
+            ],
             'candidate' => Candidate::all(),
         ]);
     })->name('admin.index');

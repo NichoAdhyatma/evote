@@ -12,6 +12,7 @@ class Vote extends Model
 
     protected $guarded = ['id'];
 
+
     public function bemCandidate()
     {
         return $this->belongsTo(Candidate::class, 'bem_id', 'id');
@@ -20,5 +21,9 @@ class Vote extends Model
     public function blmCandidate()
     {
         return $this->belongsTo(Candidate::class, 'blm_id', 'id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id')->select(['id' ,'pemilihan']);
     }
 }
