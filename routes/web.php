@@ -58,6 +58,7 @@ Route::middleware('auth', 'isAdmin')->group(function () {
     Route::post('/delete-token', [UserController::class, 'deleteToken'])->name('delete-token');
     Route::post('/banned', [VoteController::class, 'bannedVote'])->name('banned');
     Route::post("/kandidat-store", [CandidateController::class, 'store'])->name('kandidat.store');
+    Route::post("/delete-kandidat", [CandidateController::class, 'delete'])->name('kandidat.destroy');
 });
 
 require __DIR__ . '/auth.php';

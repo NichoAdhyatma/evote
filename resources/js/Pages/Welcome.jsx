@@ -1,6 +1,6 @@
 import PrimaryButton from "@/Components/PrimaryButton";
 import SecondaryButton from "@/Components/SecondaryButton";
-import { Link, Head } from "@inertiajs/react";
+import { Link, Head, router } from "@inertiajs/react";
 import { Bar, Chart } from "react-chartjs-2";
 import {
     Chart as ChartJS,
@@ -12,7 +12,6 @@ import {
     Legend,
 } from "chart.js";
 import ApplicationLogo from "@/Components/ApplicationLogo";
-import { useEffect } from "react";
 
 ChartJS.register(
     CategoryScale,
@@ -25,35 +24,31 @@ ChartJS.register(
 
 export default function Welcome({ auth, candidate, votes }) {
     const labels = ["Jumlah Suara"];
+    
+    const getRandomRGBA = () => {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        const alpha = Math.random().toFixed(5);
+
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
     const data = {
         labels,
-        datasets: [
-            {
-                label: candidate[0].candidate_name,
-                data: [
-                    votes.filter((item) => item.bem_id === candidate[0].id)
-                        .length,
-                ],
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
-            },
-            {
-                label: candidate[1].candidate_name,
-                data: [
-                    votes.filter((item) => item.bem_id === candidate[1].id)
-                        .length,
-                ],
-                backgroundColor: "rgba(53, 162, 235, 0.5)",
-            },
-            {
-                label: candidate[2].candidate_name,
-                data: [
-                    votes.filter((item) => item.bem_id === candidate[2].id)
-                        .length,
-                    votes.length,
-                ],
-                backgroundColor: "rgba(53, 1, 235, 0.5)",
-            },
-        ],
+        datasets: candidate.map((candidate) => {
+            const filteredVotes = votes.filter(
+                (item) =>
+                    item.bem_id === candidate.id || item.blm_id === candidate.id
+            );
+            const backgroundColor = getRandomRGBA();
+
+            return {
+                label: candidate.candidate_name,
+                data: [filteredVotes.length],
+                backgroundColor,
+            };
+        }),
     };
 
     const options = {
@@ -108,6 +103,11 @@ export default function Welcome({ auth, candidate, votes }) {
             <div className="mt-20 max-w-7xl mx-auto">
                 <div className="text-center my-6">
                     <ApplicationLogo />
+                </div>
+                <div className="flex justify-end">
+                    <PrimaryButton color="info" onClick={() => router.reload()}>
+                        Refresh
+                    </PrimaryButton>
                 </div>
                 <Bar data={data} options={options} />
             </div>

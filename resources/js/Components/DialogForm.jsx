@@ -19,7 +19,7 @@ export default function DialogForm({ open, handleClose, setKey }) {
                     <DialogContentText>
                         Masukan key untuk aksi ini
                     </DialogContentText>
-                    <PasswordInput autoFocus margin="dense" label="Key" onChange={setKey} />
+                    <PasswordInput autoFocus={true} margin="dense" label="Key" onChange={setKey} />
                 </DialogContent>
                 <DialogActions>
                     <SecondaryButton

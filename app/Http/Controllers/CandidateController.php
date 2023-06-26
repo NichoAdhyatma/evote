@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminnRequest;
 use App\Models\Candidate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CandidateController extends Controller
@@ -26,6 +27,23 @@ class CandidateController extends Controller
             'image' => $validatedRequest['image'],
         ]);
 
-        return redirect("/admin")->with("success", "berhasil menambah kandidat");
+        return redirect("/admin")->with("success", "Berhasil menambah kandidat");
+    }
+
+    public function delete(AdminnRequest $request)
+    {
+        $candidate = Candidate::find($request->id);
+
+        if ($candidate) {
+            if ($candidate->image) {
+                Storage::disk('public')->delete($candidate->image);
+            }
+
+            $candidate->delete();
+
+            return redirect("/admin")->with("success", "Berhasil menghapus kandidat");
+        }
+
+        return redirect("/admin");
     }
 }

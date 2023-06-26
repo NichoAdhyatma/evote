@@ -1,5 +1,5 @@
 import PrimaryButton from "@/Components/PrimaryButton";
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import {
     Button,
     Dialog,
@@ -15,6 +15,7 @@ import { MuiFileInput } from "mui-file-input";
 import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import AlertDialog from "@/Components/AlertDialog";
+import DialogForm from "@/Components/DialogForm";
 
 export default function Kandidat({ candidate }) {
     const { data, setData, post, processing } = useForm({
@@ -23,6 +24,10 @@ export default function Kandidat({ candidate }) {
         image: null,
         key: null,
     });
+
+    const [id, setId] = useState(null);
+
+    const [open3, setOpen3] = useState(false);
 
     const rows = candidate;
 
@@ -48,6 +53,24 @@ export default function Kandidat({ candidate }) {
         },
         { field: "candidate_name", headerName: "Nama", flex: 1 },
         { field: "level", headerName: "Level", flex: 1 },
+        {
+            field: "action",
+            headerName: "Aksi",
+            flex: 1,
+            renderCell: (params) => {
+                return (
+                    <PrimaryButton
+                        onClick={() => {
+                            setId(params.row.id);
+                            setOpen3(true);
+                        }}
+                        color="error"
+                    >
+                        Hapus
+                    </PrimaryButton>
+                );
+            },
+        },
     ];
 
     const [level, setLevel] = useState("bem");
@@ -74,12 +97,25 @@ export default function Kandidat({ candidate }) {
         setOpen2(false);
     };
 
+    const handleResult = (val, reason) => {
+        if (reason && reason == "backdropClick") return setOpen3(false);
+        else if (val) {
+            router.post("/delete-kandidat", {
+                key: data.key,
+                id: id,
+            });
+        }
+        setOpen3(false)
+    };
+
     const handleChange = (e) => {
         setLevel(e.target.value);
         setData("level", e.target.value);
     };
 
-    console.log(data.level)
+    const setKey = (e) => {
+        setData("key", e.target.value);
+    };
 
     const handleSetFile = (file) => {
         setFile(file);
@@ -173,6 +209,12 @@ export default function Kandidat({ candidate }) {
                     checkboxSelection={false}
                     disableRowSelectionOnClick
                     autoHeight
+                />
+
+                <DialogForm
+                    open={open3}
+                    handleClose={handleResult}
+                    setKey={setKey}
                 />
 
                 <AlertDialog
