@@ -100,7 +100,7 @@ export default function Welcome({ auth, candidate, votes }) {
                 </div>
             </div>
 
-            <div className="mt-20 max-w-7xl mx-auto">
+            <div className="mt-20 max-w-7xl mx-auto p-4">
                 <div className="text-center my-6">
                     <ApplicationLogo />
                 </div>

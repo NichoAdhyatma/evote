@@ -18,7 +18,7 @@ Route::get('/', function () {
             'votes' => Vote::where('status', 'sah')->get(["blm_id", "bem_id"]),
         ]
     );
-});
+})->name("home");
 
 Route::middleware('auth:sanctum', 'token')->group(function () {
 

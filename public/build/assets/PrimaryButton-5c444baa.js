@@ -1,0 +1,1 @@
+import{a as t}from"./app-71ec72bf.js";import{L as s}from"./LoadingButton-5260f33b.js";function d({className:o="",disabled:a,type:n="button",children:i,...r}){return t(s,{type:n,className:o,disabled:a,variant:"contained",size:"small",...r,children:t("div",{className:"font-semibold",children:i})})}export{d as P};

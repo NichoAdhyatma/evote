@@ -105,7 +105,7 @@ export default function Kandidat({ candidate }) {
                 id: id,
             });
         }
-        setOpen3(false)
+        setOpen3(falsecle)
     };
 
     const handleChange = (e) => {
