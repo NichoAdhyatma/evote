@@ -31,7 +31,7 @@
             Jam : 07.30 - 15.30
         </li>
         <li>
-            Link Pemira : menyusul
+            Link Pemira : <a href="https://fhupnjatim.my.id/">https://fhupnjatim.my.id/</a>
 
         </li>
         <li>
