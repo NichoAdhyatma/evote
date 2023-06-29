@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
     {
 
         User::create([
-            'name' => 'Mr.Admin',
-            'email' => 'admin@gmail.com',
+            'name' => 'Admin 01',
+            'email' => 'nevalkoki@gmail.com',
             'level' => 'admin',
-            'token' => 'admin'
+            'token' => 'C7W7QxLJqR5qDqbC'
         ]);
     }
 }

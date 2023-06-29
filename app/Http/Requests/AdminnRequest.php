@@ -12,7 +12,7 @@ class AdminnRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->key === 'admin' && Auth::user()->level === 'admin';
+        return $this->key === 'admin' && Auth::user()->level === 'LCnysfG8td5FcBz8';
     }
 
     /**
