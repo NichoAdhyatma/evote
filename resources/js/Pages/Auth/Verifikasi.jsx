@@ -124,7 +124,13 @@ export default function Verifikasi({ auth }) {
                 <span className="font-semibold text-blue-500 underline underline-offset-2 mx-2">
                     {auth.user.name}
                 </span>
-                verifkasi foto dulu yaa
+                verifkasi foto dulu yaa , siapkan KRS/KTM dan ambil foto
+                muka dengan jelas
+            </div>
+
+            <div>
+                <p className="font-bold my-2">Contoh Foto</p>
+                <img src="/assets/verifikasi.png" alt="foto" />
             </div>
 
             {devices.length > 0 && isOnCam ? (
