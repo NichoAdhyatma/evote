@@ -24,7 +24,7 @@ ChartJS.register(
 
 export default function Welcome({ auth, candidate, votes }) {
     const labels = ["Jumlah Suara"];
-    
+
     const getRandomRGBA = () => {
         const r = Math.floor(Math.random() * 256);
         const g = Math.floor(Math.random() * 256);
@@ -87,13 +87,6 @@ export default function Welcome({ auth, candidate, votes }) {
                                 className="font-semibold"
                             >
                                 <PrimaryButton>Masuk</PrimaryButton>
-                            </Link>
-
-                            <Link
-                                href={route("register")}
-                                className="font-semibold"
-                            >
-                                <SecondaryButton>Daftar</SecondaryButton>
                             </Link>
                         </div>
                     )}
