@@ -12,11 +12,7 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render(
-        'Welcome',
-        [
-            'candidate' => Candidate::all(),
-            'votes' => Vote::where('status', 'sah')->get(["blm_id", "bem_id"]),
-        ]
+        'Welcome'
     );
 })->name("home");
 
@@ -53,6 +49,12 @@ Route::middleware('auth', 'isAdmin')->group(function () {
             'candidate' => Candidate::all(),
         ]);
     })->name('admin.index');
+    Route::get("/grafik-suara", function () {
+        return Inertia::render('Admin/Grafik', [
+            'candidate' => Candidate::all(),
+            'votes' => Vote::where('status', 'sah')->get(["blm_id", "bem_id"]),
+        ]);
+    })->name('grafik');
     Route::post('/send-mail-to-users', [UserController::class, 'sendEmail'])->name('send-mail');
     Route::post('/genrate-token', [UserController::class, 'generateToken'])->name('token');
     Route::post('/delete-token', [UserController::class, 'deleteToken'])->name('delete-token');

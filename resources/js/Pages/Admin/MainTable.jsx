@@ -4,6 +4,9 @@ import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import PrimaryButton from "@/Components/PrimaryButton";
 import DialogForm from "@/Components/DialogForm";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { IconButton } from "@mui/material";
+import { toast } from "react-toastify";
 
 export default function MainTable({ users }) {
     const { data, setData, post, processing } = useForm({
@@ -25,7 +28,36 @@ export default function MainTable({ users }) {
         { field: "id", headerName: "ID", width: 50 },
         { field: "name", headerName: "Nama", flex: 1 },
         { field: "email", headerName: "Email", flex: 1 },
-        { field: "token", headerName: "Token", flex: 1 },
+        {
+            field: "token",
+            headerName: "Token",
+            flex: 1,
+            renderCell: (param) => {
+                return (
+                    <div className="flex items-center gap-4">
+                        <IconButton
+                            aria-label="copy-token"
+                            onClick={() => {
+                                navigator.clipboard.writeText(param.value);
+                                toast.info("Berhasil terkopi", {
+                                    position: "top-center",
+                                    autoClose: 1000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: false,
+                                    draggable: true,
+                                    progress: undefined,
+                                    theme: "light",
+                                });
+                            }}
+                        >
+                            <ContentCopyIcon />
+                        </IconButton>
+                        <p> {param.value}</p>
+                    </div>
+                );
+            },
+        },
     ];
 
     const handleDialog = (opt) => {
@@ -100,7 +132,6 @@ export default function MainTable({ users }) {
                         Hapus Token
                     </PrimaryButton>
                     <SecondaryButton
-                        color="warning"
                         loading={processing}
                         onClick={() => router.reload()}
                     >

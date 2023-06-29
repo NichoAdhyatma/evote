@@ -115,9 +115,12 @@ export default function RekapSuara({ users, suara }) {
 
             <div className="my-4 flex justify-end w-full gap-4">
                 <div className="flex items-center gap-4 mx-4">
-                    <div>Sah : {suara.sah}</div>
-                    <div>Tidak Sah : {suara.tidakSah}</div>
+                    <div className="text-green-600 font-bold">Sah : {suara.sah}</div>
+                    <div className="text-red-600 font-bold">Tidak Sah : {suara.tidakSah}</div>
                 </div>
+                <PrimaryButton onClick={() => router.visit("/grafik-suara")} color="info">
+                    Grafik Suara
+                </PrimaryButton>
                 <PrimaryButton onClick={() => router.reload()} color="info">
                     Refresh
                 </PrimaryButton>

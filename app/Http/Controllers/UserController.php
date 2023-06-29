@@ -65,6 +65,7 @@ class UserController extends Controller
             $user->tokens()->delete();
             $token = $user->createToken("auth-token");
             $user->token = $token->plainTextToken;
+            $user->verifikasi = false;
             $user->save();
         }
 
