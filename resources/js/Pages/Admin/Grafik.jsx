@@ -40,7 +40,10 @@ export default function Grafik({ auth, candidate, votes }) {
                 (item) =>
                     item.bem_id === candidate.id || item.blm_id === candidate.id
             );
+
             const backgroundColor = getRandomRGBA();
+
+            console.log(filteredVotes.length);
 
             return {
                 label: candidate.candidate_name,
