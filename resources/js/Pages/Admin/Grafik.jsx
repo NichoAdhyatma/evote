@@ -38,7 +38,7 @@ export default function Grafik({ auth, candidate, votes }) {
         datasets: candidate.map((candidate) => {
             const filteredVotes = votes.filter(
                 (item) =>
-                    item.bem_id === candidate.id || item.blm_id === candidate.id
+                    item.bem_id == candidate.id || item.blm_id == candidate.id
             );
 
             const backgroundColor = getRandomRGBA();
