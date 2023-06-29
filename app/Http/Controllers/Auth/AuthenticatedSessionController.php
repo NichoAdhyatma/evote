@@ -36,6 +36,8 @@ class AuthenticatedSessionController extends Controller
 
         if (Auth::user()->level === 'admin') {
             return redirect('/admin');
+        } else if (Auth::user()->verifikasi) {
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
 
         return redirect()->intended(RouteServiceProvider::VERIF);
@@ -62,12 +64,6 @@ class AuthenticatedSessionController extends Controller
     public function tokenRefresh(): void
     {
         $user = Auth::user();
-
-        $user->verifikasi = false;
-
-        $user->tokens()->delete();
-
-        $user->token = $user->createToken('auth-token')->plainTextToken;
 
         $user->save();
     }

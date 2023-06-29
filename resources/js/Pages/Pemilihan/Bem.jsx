@@ -1,49 +1,43 @@
 import PrimaryButton from "@/Components/PrimaryButton";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-export default function Bem({ handlePilihan, bem }) {
+export default function Bem({ handlePilihan, bem, candidate }) {
     return (
         <>
             <h1 className="font-semibold text-center my-4">
                 Pemilihan Ketua-Wakil BEM FH
             </h1>
             <div className="flex flex-wrap gap-8 items-center w-full justify-center">
-                <div className="flex flex-col gap-4 items-center">
-                    <img
-                        src="/assets/profile.png"
-                        alt=""
-                        width={250}
-                        height={250}
-                    />
-                    <p>01</p>
-
-                    <PrimaryButton
-                        onClick={() => handlePilihan("bem", 1)}
-                        variant={bem === 1 ? "outlined" : "contained"}
-                        startIcon={bem === 1 ? <CheckCircleIcon /> : <></>}
-                        color={bem === 1 ? "success" : "primary"}
+                {candidate.map((item, index) => (
+                    
+                    <div
+                        key={index}
+                        className="flex flex-col gap-4 items-center"
                     >
-                        {bem === 1 ? "Dipilih" : "pilih"}
-                    </PrimaryButton>
-                </div>
-                <div className="flex flex-col gap-4 items-center">
-                    <img
-                        src="/assets/profile.png"
-                        alt=""
-                        width={250}
-                        height={250}
-                    />
-                    <p>02</p>
+                        <div className="h-60">
+                            <img
+                                src={`/storage/${item.image}`}
+                                alt="kandidat"
+                                width={250}
+                                height={250}
+                                className="min-h-[250]"
+                            />
+                        </div>
+                        <p className="font-bold mt-4">{item.candidate_name}</p>
 
-                    <PrimaryButton
-                        onClick={() => handlePilihan("bem", 2)}
-                        variant={bem === 2 ? "outlined" : "contained"}
-                        startIcon={bem === 2 ? <CheckCircleIcon /> : <></>}
-                        color={bem === 2 ? "success" : "primary"}
-                    >
-                        {bem === 2 ? "Dipilih" : "pilih"}
-                    </PrimaryButton>
-                </div>
+                        <PrimaryButton
+                            className="mt-4"
+                            onClick={() => handlePilihan("bem", item.id)}
+                            variant={bem === item.id ? "outlined" : "contained"}
+                            startIcon={
+                                bem === item.id ? <CheckCircleIcon /> : <></>
+                            }
+                            color={bem === item.id ? "success" : "primary"}
+                        >
+                            {bem === item.id ? "Dipilih" : "pilih"}
+                        </PrimaryButton>
+                    </div>
+                ))}
             </div>
         </>
     );

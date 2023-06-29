@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('candidate_name');
             $table->enum('level', ['bem', 'blm']);
+            $table->string("image")->nullable();
             $table->timestamps();
         });
     }

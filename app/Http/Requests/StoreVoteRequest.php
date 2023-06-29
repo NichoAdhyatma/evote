@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreVoteRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreVoteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check() && Auth::user()->verifikasi && !Auth::user()->pemilihan;
     }
 
     /**
@@ -22,7 +23,7 @@ class StoreVoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'pilihan' => 'required',
         ];
     }
 }

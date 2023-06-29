@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminnRequest;
 use App\Mail\TokenMail;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,6 +14,16 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    public function getUser(AdminnRequest $request)
+    {
+        $users = [];
+        if ($request->selectId) {
+            $users = User::whereIn('id', $request->selectId)->get();
+        } else {
+            $users = User::where('level', 'user')->get();
+        }
+        return $users;
+    }
     public function uploadPhoto(Request $request)
     {
         $request->validate([
@@ -35,9 +46,9 @@ class UserController extends Controller
         return redirect("/onboard");
     }
 
-    public function sendEmail()
+    public function sendEmail(AdminnRequest $request)
     {
-        $users = User::where('level', 'user')->get();
+        $users = $this->getUser($request);
 
         foreach ($users as $user) {
             Mail::to($user->email)->send(new TokenMail($user));
@@ -46,9 +57,9 @@ class UserController extends Controller
         return redirect("/admin")->with("success", "Berhasil mengirim email");
     }
 
-    public function generateToken()
+    public function generateToken(AdminnRequest $request)
     {
-        $users = User::where('level', 'user')->get();
+        $users = $this->getUser($request);
 
         foreach ($users as $user) {
             $user->tokens()->delete();
@@ -60,9 +71,9 @@ class UserController extends Controller
         return redirect("/admin")->with("success", "Berhasil generate Token");
     }
 
-    public function deleteToken()
+    public function deleteToken(AdminnRequest $request)
     {
-        $users = User::where('level', 'user')->get();
+        $users = $this->getUser($request);
 
         foreach ($users as $user) {
             $user->token = null;

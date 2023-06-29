@@ -17,10 +17,10 @@ class isVerif
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        $haveTokenAndUser = $user->tokens()->count() > 0 && $user->level === 'user';
+        $haveTokenAndUser = $user->level === 'user';
 
         if ($haveTokenAndUser) {
-            return $user->verifikasi ? redirect("/onboard") : $next($request);
+            return $user->verifikasi ? abort(403) : $next($request);
         }
 
         Auth::guard('web')->logout();

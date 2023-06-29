@@ -17,14 +17,14 @@ class tokenActive
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        $haveTokenAndUser = $user->tokens()->count() > 0 && $user->level === 'user';
+        $haveTokenAndUser = $user->level === 'user';
 
         if ($haveTokenAndUser) {
             return $user->verifikasi ?  $next($request) : redirect("/verifikasi");
         }
 
         if ($user->level === 'admin') {
-            return redirect('/');
+            return abort(401);
         }
 
         Auth::guard('web')->logout();
