@@ -43,8 +43,6 @@ export default function Grafik({ auth, candidate, votes }) {
 
             const backgroundColor = getRandomRGBA();
 
-            console.log(filteredVotes.length);
-
             return {
                 label: candidate.candidate_name,
                 data: [filteredVotes.length],
