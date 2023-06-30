@@ -52,6 +52,8 @@ class UserController extends Controller
 
         foreach ($users as $user) {
             Mail::to($user->email)->send(new TokenMail($user));
+            $user->pengiriman = true;
+            $user->save();
         }
 
         return redirect("/admin")->with("success", "Berhasil mengirim email");
@@ -66,6 +68,7 @@ class UserController extends Controller
             $token = $user->createToken("auth-token");
             $user->token = $token->plainTextToken;
             $user->verifikasi = false;
+            $user->pengiriman = false;
             $user->save();
         }
 

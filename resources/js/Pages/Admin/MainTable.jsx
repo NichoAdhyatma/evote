@@ -5,8 +5,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import PrimaryButton from "@/Components/PrimaryButton";
 import DialogForm from "@/Components/DialogForm";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { toast } from "react-toastify";
+import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export default function MainTable({ users }) {
     const { data, setData, post, processing } = useForm({
@@ -57,6 +59,21 @@ export default function MainTable({ users }) {
                     </div>
                 );
             },
+        },
+        {
+            field: "pengiriman",
+            headerName: "Pengiriman",
+            width: 110,
+            renderCell: (params) =>
+                params.value == 1 ? (
+                    <Tooltip title="Terkirim">
+                        <CheckCircleRoundedIcon color="success" />
+                    </Tooltip>
+                ) : (
+                    <Tooltip title="Belum terkirim">
+                        <CancelIcon color="error" />
+                    </Tooltip>
+                ),
         },
     ];
 

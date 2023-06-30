@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum', 'isVerif')->group(function () {
 Route::middleware('auth', 'isAdmin')->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('Admin/Index', [
-            'users' => User::where('level', 'user')->get(['id', 'name', 'email', 'token', 'image', 'pemilihan']),
+            'users' => User::where('level', 'user')->get(['id', 'name', 'email', 'token', 'image', 'pemilihan', 'pengiriman']),
             'suara' => [
                 'sah' => Vote::where('status', 'sah')->count(),
                 'tidakSah' =>  Vote::where('status', 'tidak-sah')->count(),
