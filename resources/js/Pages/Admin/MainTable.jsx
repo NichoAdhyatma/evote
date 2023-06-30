@@ -75,6 +75,17 @@ export default function MainTable({ users }) {
                     </Tooltip>
                 ),
         },
+        {
+            field: "pemilihan",
+            headerName: "Pengiriman",
+            width: 110,
+            renderCell: (params) =>
+                params.value != null ? (
+                    <Tooltip title="Sudah memilih">
+                        <CheckCircleRoundedIcon color="success" />
+                    </Tooltip>
+                ) : null,
+        },
     ];
 
     const handleDialog = (opt) => {
