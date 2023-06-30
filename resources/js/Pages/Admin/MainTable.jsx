@@ -77,7 +77,7 @@ export default function MainTable({ users }) {
         },
         {
             field: "pemilihan",
-            headerName: "Pengiriman",
+            headerName: "Pemilihan",
             width: 110,
             renderCell: (params) =>
                 params.value != null ? (
